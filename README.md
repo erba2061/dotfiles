@@ -9,11 +9,17 @@
 - Nerd font (https://www.nerdfonts.com/font-downloads)
 - Silver searcher (https://github.com/ggreer/the_silver_searcher#installing)
 
+*Setup*
+
+- :PlugInstall - install plugins defined in .vimrc
+- :LspInstall - install language server for currently opened file
+
 *Useful commands*
 
 - Ctrl + G - search for files and occurences in the project (shorthand for :Ag)
 - Ctrl + P - go to definition
 - Ctrl + S - save (shorthand for :w)
+
 ...
 
 
