@@ -7,6 +7,7 @@
 - Zsh & OhMyZsh (https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
 - Powerlvel10k (https://github.com/romkatv/powerlevel10k#oh-my-zsh)
 - Nerd font (https://www.nerdfonts.com/font-downloads)
+- Silver searcher (https://github.com/ggreer/the_silver_searcher#installing)
 
 *Useful commands*
 
