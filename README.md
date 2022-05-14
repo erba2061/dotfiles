@@ -3,9 +3,10 @@
 *Prerequisites*
 
 - Neovim (https://github.com/neovim/neovim/wiki/Installing-Neovim)
+- Neovim with vimrc (https://neovim.io/doc/user/nvim.html#nvim-from-vim)
 - Zsh & OhMyZsh (https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
 - Powerlvel10k (https://github.com/romkatv/powerlevel10k#oh-my-zsh)
-- Use vimrc config (https://neovim.io/doc/user/nvim.html#nvim-from-vim)
+- Nerd font (https://www.nerdfonts.com/font-downloads)
 
 *Useful commands*
 
