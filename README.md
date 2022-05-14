@@ -4,6 +4,7 @@
 
 - Neovim (https://github.com/neovim/neovim/wiki/Installing-Neovim)
 - Zsh & OhMyZsh (https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
+- Powerlvel10k (https://github.com/romkatv/powerlevel10k#oh-my-zsh)
 
 *Useful commands*
 
