@@ -1,4 +1,6 @@
-# vim-conf
+# dotfiles
+
+Zsh and vim setup
 
 *Prerequisites*
 
