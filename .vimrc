@@ -1,8 +1,6 @@
 call plug#begin('~/.vim/plugged')
-Plug 'eslint/eslint'
 Plug 'sbdchd/neoformat'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -20,7 +18,6 @@ Plug 'vim-airline/vim-airline-themes'
 
 Plug 'preservim/tagbar'
 
-Plug 'fatih/vim-go'
 Plug 'rust-lang/rust.vim'
 
 Plug 'prabirshrestha/vim-lsp'
@@ -30,6 +27,7 @@ Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 Plug 'ncm2/float-preview.nvim'
+Plug 'EdenEast/nightfox.nvim'
 
 call plug#end()
 
@@ -40,6 +38,12 @@ set nowrap
 set hidden
 set cursorline
 set clipboard=unnamed
+
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
+  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+augroup END
 
 syntax enable
 filetype plugin indent on
@@ -111,9 +115,8 @@ nnoremap <C-p> :LspDefinition<CR>
 nnoremap <C-i> :LspReferences<CR>
 nnoremap <C-g> :Ag<CR>
 nnoremap <C-s> :w<CR>
+nnoremap <C-b> :NERDTreeToggle<CR>
 
 set t_Co=256
 
-colorscheme onehalfdark
-let g:airline_theme='onehalflight'
-
+colorscheme nightfox
