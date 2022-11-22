@@ -71,9 +71,9 @@ augroup END
 
 " Buffer stuff
 set hidden
-nnoremap <C-e> :bnext<CR>
-nnoremap <C-q> :bprev<CR>
-nnoremap <C-r> :bdelete<CR>
+nnoremap qn :bnext<CR>
+nnoremap qp :bprev<CR>
+nnoremap qd :bdelete<CR>
 
 " Keybind stuff
 nnoremap <C-s> :w<CR>
