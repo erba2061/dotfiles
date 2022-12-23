@@ -71,9 +71,9 @@ augroup END
 
 " Buffer stuff
 set hidden
-nnoremap qn :bnext<CR>
-nnoremap qp :bprev<CR>
-nnoremap qd :bdelete<CR>
+nnoremap <S-e> :bnext<CR>
+nnoremap <S-q> :bprev<CR>
+nnoremap <S-w> :bdelete<CR>
 
 " Keybind stuff
 nnoremap <C-s> :w<CR>
@@ -102,6 +102,7 @@ lua <<EOF
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
     vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+    vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
   end
 
   -- Set up nvim-cmp.
