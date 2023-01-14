@@ -21,6 +21,8 @@ Plug 'ncm2/float-preview.nvim'
 Plug 'EdenEast/nightfox.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'sheerun/vim-polyglot'
+Plug 'xiyaowong/nvim-transparent'
+Plug 'rose-pine/neovim'
 call plug#end()
 
 lua vim.g.loaded_netrw = 1
@@ -36,6 +38,7 @@ set hidden
 set cursorline
 set clipboard=unnamed
 set t_Co=256
+set scrolloff=12
 
 augroup numbertoggle
   autocmd!
@@ -69,6 +72,9 @@ augroup formatior
   autocmd BufWritePre *.less Neoformat
 augroup END
 
+nnoremap <SPACE> <Nop>
+let mapleader = " "
+
 " Buffer stuff
 set hidden
 nnoremap <S-e> :bnext<CR>
@@ -85,7 +91,11 @@ nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
-colorscheme nightfox
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '>-2<CR>gv=gv
+
+" colorscheme nightfox
+colorscheme rose-pine
 
 set completeopt=menu,menuone,noselect
 
@@ -103,6 +113,7 @@ lua <<EOF
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set('n', 'gh', vim.lsp.buf.hover, bufopts)
     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
@@ -192,4 +203,19 @@ lua <<EOF
     on_attach = on_attach,
     capabilities = capabilities
   }
+  require("transparent").setup({
+    enable = true, -- boolean: enable transparent
+    extra_groups = { -- table/string: additional groups that should be cleared
+      -- In particular, when you set it to 'all', that means all available groups
+
+      -- example of akinsho/nvim-bufferline.lua
+      "BufferLineTabClose",
+      "BufferlineBufferSelected",
+      "BufferLineFill",
+      "BufferLineBackground",
+      "BufferLineSeparator",
+      "BufferLineIndicatorSelected",
+    },
+    exclude = {}, -- table: groups you don't want to clear
+  })
 EOF
