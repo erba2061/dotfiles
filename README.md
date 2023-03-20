@@ -1,29 +1,26 @@
-# dotfiles
+# Dotfiles
 
-Zsh and vim setup
+zsh and nvim setup.
 
-*Prerequisites*
+## Prerequisites
+
+zsh:
+
+- Zsh & OhMyZsh (https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
+
+- Powerlvel10k (https://github.com/romkatv/powerlevel10k#oh-my-zsh)
+
+- Nerd font (https://www.nerdfonts.com/font-downloads)
+
+nvim:
 
 - Neovim (https://github.com/neovim/neovim/wiki/Installing-Neovim)
-- Neovim with vimrc (https://neovim.io/doc/user/nvim.html#nvim-from-vim)
-- Zsh & OhMyZsh (https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH)
-- Powerlvel10k (https://github.com/romkatv/powerlevel10k#oh-my-zsh)
-- Nerd font (https://www.nerdfonts.com/font-downloads)
-- Silver searcher (https://github.com/ggreer/the_silver_searcher#installing)
 
-*Setup*
+- Rip grep (https://github.com/nvim-telescope/telescope.nvim#suggested-dependencies)
 
-- :PlugInstall - install plugins defined in .vimrc
-- :LspInstall - install language server for currently opened file
+- Packer (https://github.com/wbthomason/packer.nvim#quickstart)
 
-*Useful commands*
+## Setup
 
-- Ctrl + G - search for files and occurences in the project (shorthand for :Ag)
-- Ctrl + P - go to definition
-- Ctrl + S - save (shorthand for :w)
-
-...
-
-
-
+- `:PackerInstall` - install plugins defined in `nvim/lua/plugins.lua`
 
