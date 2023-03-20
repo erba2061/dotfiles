@@ -27,10 +27,12 @@ vim.keymap.set("n", "<C-s>", "<cmd>w<cr>")
 vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<cr>")
 vim.keymap.set("n", "<C-n>", "<cmd>NvimTreeFindFileToggle<cr>")
 
-vim.keymap.set("n", "<leader>ff", "<cmd>require('telescope.builtin').git_files()<cr>")
-vim.keymap.set("n", "<leader>fg", "<cmd>require('telescope.builtin').live_grep()<cr>")
-vim.keymap.set("n", "<leader>fb", "<cmd>require('telescope.builtin').buffers()<cr>")
-vim.keymap.set("n", "<leader>fh", "<cmd>require('telescope.builtin').help_tags()<cr>")
+
+local builtin = require('telescope.builtin')
+vim.keymap.set("n", "<leader>ff", builtin.git_files, {})
+vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
+vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
+vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
 
 require('lualine').setup({
 	options = {
