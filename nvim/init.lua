@@ -44,7 +44,13 @@ require('lualine').setup({
 	},
 })
 
-require("nvim-tree").setup()
+require("nvim-tree").setup({
+	view = {
+		float = {
+			enable = true
+		}
+	}
+})
 
 
 local lsp = require('lsp-zero').preset({
