@@ -7,12 +7,15 @@ return require('packer').startup(function(use)
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
 	use({
-		'rose-pine/neovim',
-		as = 'rose-pine',
+		'projekt0n/github-nvim-theme',
 		config = function()
-			vim.cmd('colorscheme rose-pine')
+			require('github-theme').setup({
+				-- ...
+			})
+
+			vim.cmd('colorscheme github_dark_high_contrast')
 		end
-	});
+	})
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" });
 	use("tpope/vim-fugitive");
 	use("nvim-treesitter/nvim-treesitter-context");
