@@ -34,6 +34,9 @@ vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
 vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
 
+vim.g.copilot_no_tab_map = true
+vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+
 require('lualine').setup({
 	options = {
 		component_separators = { left = '|', right = '|' },
@@ -67,13 +70,28 @@ lsp.setup()
 
 local cmp = require('cmp');
 
+cmp.setup.sources = {
+    -- Other Sources
+    { name = "nvim_lsp", group_index = 2 },
+    { name = "path", group_index = 2 },
+    { name = "luasnip", group_index = 2 },
+}
+
 -- Set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
 	sources = cmp.config.sources({
 		{ name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
 	}, {
 		{ name = 'buffer' },
-	})
+	}),
+	mapping = {
+	    ['<CR>'] = cmp.mapping.confirm({
+		      -- documentation says this is important.
+		      -- I don't know why.
+		      behavior = cmp.ConfirmBehavior.Replace,
+		      select = false,
+	    })
+	}
 })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
@@ -110,7 +128,7 @@ require 'treesitter-context'.setup {
 
 require 'nvim-treesitter.configs'.setup {
 	-- A list of parser names, or "all"
-	ensure_installed = { "help", "javascript", "typescript", "c", "lua", "rust" },
+	ensure_installed = { "vimdoc", "javascript", "typescript", "c", "lua", "rust" },
 
 	-- Install parsers synchronously (only applied to `ensure_installed`)
 	sync_install = false,
