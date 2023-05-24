@@ -10,6 +10,7 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 6
 vim.opt.rnu = true
 vim.g.loaded_netrw = 1
+vim.g.termguicolors = true
 vim.g.loaded_netrwPlugin = 1
 vim.g.python3_host_skip_check = 1
 vim.g.neoformat_try_node_exe = 1
@@ -37,9 +38,19 @@ vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
 vim.g.copilot_no_tab_map = true
 vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
+require("telescope").setup {
+	pickers = {
+		live_grep = {
+			additional_args = function(opts)
+				return { "--hidden" }
+			end
+		},
+	},
+}
+
 require('lualine').setup({
 	options = {
-		component_separators = { left = '|', right = '|' },
+		component_separators = { left = '', right = '' },
 		section_separators = { left = '', right = '' }
 	},
 	tabline = {
@@ -47,6 +58,7 @@ require('lualine').setup({
 	},
 })
 
+-- TODO: Fix float config err "cannot close last window"
 require("nvim-tree").setup({
 	view = {
 		float = {
@@ -54,7 +66,6 @@ require("nvim-tree").setup({
 		}
 	}
 })
-
 
 local lsp = require('lsp-zero').preset({
 	name = 'minimal',
