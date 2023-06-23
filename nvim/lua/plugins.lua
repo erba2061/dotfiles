@@ -7,10 +7,13 @@ return require('packer').startup(function(use)
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
 	use 'github/copilot.vim'
-	use { 'morhetz/gruvbox', config = function()
-		vim.g.gruvbox_contrast_dark = 'hard'
-		vim.cmd.colorscheme("gruvbox")
-	end }
+	use({
+		'rose-pine/neovim',
+		as = 'rose-pine',
+		config = function()
+			vim.cmd('colorscheme rose-pine')
+		end
+	});
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" });
 	use("tpope/vim-fugitive");
 	use("nvim-treesitter/nvim-treesitter-context");
