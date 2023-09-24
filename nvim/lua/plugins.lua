@@ -8,10 +8,19 @@ return require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 	use 'github/copilot.vim'
 	use({
-		'rose-pine/neovim',
-		as = 'rose-pine',
+		'navarasu/onedark.nvim',
+		as = 'onedark',
 		config = function()
-			vim.cmd('colorscheme rose-pine')
+			vim.g.onedark_termcolors = 16;
+			vim.cmd('colorscheme onedark');
+			local c = require('onedark.colors');
+
+			vim.api.nvim_command(string.format("highlight NvimTreeNormal guifg=%s guibg=%s guisp=none gui=none",
+				c.fg,
+				c.bg1));
+			vim.api.nvim_command(string.format("highlight NvimTreeEndOfBuffer guifg=%s guibg=%s guisp=none gui=none",
+				c.fg,
+				c.bg1));
 		end
 	});
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" });
