@@ -1,4 +1,5 @@
 require("plugins")
+require("lsp")
 
 vim.opt.clipboard = "unnamed"
 vim.opt.guicursor = ""
@@ -127,42 +128,8 @@ require("nvim-tree").setup({
 	}
 })
 
-local lsp_zero = require('lsp-zero').preset({
-	name = 'minimal',
-	set_lsp_keymaps = true,
-	manage_nvim_cmp = true,
-	suggest_lsp_servers = true,
-});
-
-require('mason').setup({});
-require('mason-lspconfig').setup({
-	ensure_installed = { 'tsserver', 'rust_analyzer' },
-	handlers = {
-		lsp_zero.setup,
-		lua_ls = function()
-		      require('lspconfig').lua_ls.setup(lsp_zero.nvim_lua_ls())
-		    end,
-		tsserver = function()
-			require('lspconfig').tsserver.setup({
-				on_attach = function(client, bufnr)
-					-- see :help lsp-zero-keybindings
-					-- to learn the available actions
-					lsp_zero.default_keymaps({ buffer = bufnr })
-				end,
-				root_dir = require('lspconfig/util').root_pattern("jsconfig.json", "tsconfig.json", ".git"),
-			})
-		end,
-	},
-});
 
 local cmp = require('cmp');
-
-cmp.setup.sources = {
-	-- Other Sources
-	{ name = "nvim_lsp", group_index = 2 },
-	{ name = "path",     group_index = 2 },
-	{ name = "luasnip",  group_index = 2 },
-}
 
 -- Set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
