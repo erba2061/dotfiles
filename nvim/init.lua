@@ -37,8 +37,31 @@ vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
 
 vim.g.copilot_no_tab_map = true
 vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+vim.api.nvim_set_keymap("i", "<C-\\>", 'copilot#Suggest()', { silent = true, expr = true })
+
+local select_one_or_multi = function(prompt_bufnr)
+	local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
+	local multi = picker:get_multi_selection()
+	if not vim.tbl_isempty(multi) then
+		require('telescope.actions').close(prompt_bufnr)
+		for _, j in pairs(multi) do
+			if j.path ~= nil then
+				vim.cmd(string.format("%s %s", "edit", j.path))
+			end
+		end
+	else
+		require('telescope.actions').select_default(prompt_bufnr)
+	end
+end
 
 require("telescope").setup {
+	defaults = {
+		mappings = {
+			i = {
+				["<CR>"] = select_one_or_multi,
+			}
+		}
+	},
 	pickers = {
 		live_grep = {
 			additional_args = function(opts)
@@ -104,17 +127,33 @@ require("nvim-tree").setup({
 	}
 })
 
-local lsp = require('lsp-zero').preset({
+local lsp_zero = require('lsp-zero').preset({
 	name = 'minimal',
 	set_lsp_keymaps = true,
 	manage_nvim_cmp = true,
 	suggest_lsp_servers = true,
-})
+});
 
--- (Optional) Configure lua language server for neovim
-lsp.nvim_workspace()
-
-lsp.setup()
+require('mason').setup({});
+require('mason-lspconfig').setup({
+	ensure_installed = { 'tsserver', 'rust_analyzer' },
+	handlers = {
+		lsp_zero.setup,
+		lua_ls = function()
+		      require('lspconfig').lua_ls.setup(lsp_zero.nvim_lua_ls())
+		    end,
+		tsserver = function()
+			require('lspconfig').tsserver.setup({
+				on_attach = function(client, bufnr)
+					-- see :help lsp-zero-keybindings
+					-- to learn the available actions
+					lsp_zero.default_keymaps({ buffer = bufnr })
+				end,
+				root_dir = require('lspconfig/util').root_pattern("jsconfig.json", "tsconfig.json", ".git"),
+			})
+		end,
+	},
+});
 
 local cmp = require('cmp');
 
