@@ -55,6 +55,8 @@ local select_one_or_multi = function(prompt_bufnr)
 	end
 end
 
+require("go").setup();
+
 require("telescope").setup {
 	defaults = {
 		mappings = {
