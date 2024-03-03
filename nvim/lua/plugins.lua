@@ -16,10 +16,12 @@ return require('packer').startup(function(use)
 			vim.cmd('colorscheme onedark');
 			local c = require('onedark.colors');
 
-			vim.api.nvim_command(string.format("highlight NvimTreeNormal guifg=%s guibg=%s guisp=none gui=none",
+			vim.api.nvim_command(string.format(
+				"highlight NvimTreeNormal guifg=%s guibg=%s guisp=none gui=none",
 				c.fg,
 				c.bg1));
-			vim.api.nvim_command(string.format("highlight NvimTreeEndOfBuffer guifg=%s guibg=%s guisp=none gui=none",
+			vim.api.nvim_command(string.format(
+				"highlight NvimTreeEndOfBuffer guifg=%s guibg=%s guisp=none gui=none",
 				c.fg,
 				c.bg1));
 		end
