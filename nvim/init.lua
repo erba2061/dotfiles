@@ -25,7 +25,7 @@ vim.keymap.set("n", "<S-q>", "<cmd>bprev<CR>")
 vim.keymap.set("n", "<S-w>", "<cmd>bdelete<CR>")
 
 -- Keybind stuff
-vim.keymap.set("n", "<C-s>", "<cmd>w<cr>")
+-- vim.keymap.set("n", "<C-s>", "<cmd>w<cr>")
 vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<cr>")
 vim.keymap.set("n", "<C-n>", "<cmd>NvimTreeFindFileToggle<cr>")
 
@@ -36,6 +36,7 @@ vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
 vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
 
+vim.g.shfmt_opt = "-ci"
 vim.g.copilot_no_tab_map = true
 vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 vim.api.nvim_set_keymap("i", "<C-\\>", 'copilot#Suggest()', { silent = true, expr = true })
