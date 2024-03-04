@@ -20,18 +20,18 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "<SPACE>", "<Nop>")
 
 -- Buffer stuff
-vim.keymap.set("n", "<S-e>", "<cmd>bnext<CR>")
-vim.keymap.set("n", "<S-q>", "<cmd>bprev<CR>")
-vim.keymap.set("n", "<S-w>", "<cmd>bdelete<CR>")
+-- vim.keymap.set("n", "<S-e>", "<cmd>bnext<CR>")
+-- vim.keymap.set("n", "<S-q>", "<cmd>bprev<CR>")
+-- vim.keymap.set("n", "<S-w>", "<cmd>bdelete<CR>")
 
 -- Keybind stuff
 -- vim.keymap.set("n", "<C-s>", "<cmd>w<cr>")
-vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<cr>")
+-- vim.keymap.set("n", "<C-b>", "<cmd>NvimTreeToggle<cr>")
 vim.keymap.set("n", "<C-n>", "<cmd>NvimTreeFindFileToggle<cr>")
 
-
 local builtin = require('telescope.builtin')
-vim.keymap.set("n", "<leader>ff", builtin.git_files, {})
+vim.keymap.set("n", "<C-b>", builtin.grep_string, {})
+vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
 vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
@@ -81,7 +81,7 @@ require('lualine').setup({
 		section_separators = { left = '', right = '' }
 	},
 	tabline = {
-		lualine_a = { 'buffers' },
+		-- lualine_a = { 'buffers' },
 	},
 	sections = {
 		lualine_c = {
