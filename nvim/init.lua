@@ -316,7 +316,15 @@ require("lazy").setup({
 	-- you do for a plugin at the top level, you can do for a dependency.
 	--
 	-- Use the `dependencies` key to specify the dependencies of a particular plugin
-
+	{
+		"nvim-telescope/telescope-file-browser.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+		config = function()
+			vim.keymap.set("n", "<space>fb", function()
+				require("telescope").extensions.file_browser.file_browser({ select_buffer = true, path = "%:p:h" })
+			end)
+		end,
+	},
 	{ -- Fuzzy Finder (files, lsp, etc)
 		"nvim-telescope/telescope.nvim",
 		event = "VimEnter",
@@ -377,18 +385,39 @@ require("lazy").setup({
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
 					},
+					file_browser = {
+						hijack_netrw = true,
+					},
 				},
 			})
 
 			-- Enable Telescope extensions if they are installed
 			pcall(require("telescope").load_extension, "fzf")
 			pcall(require("telescope").load_extension, "ui-select")
+			pcall(require("telescope").load_extension, "file_browser")
 
 			-- See `:help telescope.builtin`
 			local builtin = require("telescope.builtin")
+
+			local function find_files(curr_buf)
+				local cwd
+				if curr_buf then
+					local bufnr = vim.api.nvim_get_current_buf()
+					local bufname = vim.api.nvim_buf_get_name(bufnr)
+					cwd = vim.fn.fnamemodify(bufname, ":h")
+				end
+
+				builtin.find_files({
+					desc = "[S]earch [S]uffer",
+					prompt_title = curr_buf and "Find Files Relative to Buffer" or "Find Files",
+					cwd = cwd,
+					hidden = true,
+				})
+			end
+
 			vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
 			vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
-			vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
+			vim.keymap.set("n", "<leader>sf", find_files, { desc = "[S]earch [F]iles" })
 			vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
 			vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
 			vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
@@ -396,6 +425,9 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 			vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 			vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+			vim.keymap.set("n", "<leader>sc", function()
+				find_files(true)
+			end, { desc = "[S]earch [C]urrent buffer directory" })
 
 			-- Slightly advanced example of overriding default behavior and theme
 			vim.keymap.set("n", "<leader>/", function()
@@ -644,6 +676,8 @@ require("lazy").setup({
 				-- You can use a sub-list to tell conform to run *until* a formatter
 				-- is found.
 				javascript = { { "prettierd", "prettier" } },
+				javascriptreact = { { "prettierd", "prettier" } },
+				less = { { "prettierd", "prettier" } },
 			},
 		},
 	},
@@ -789,32 +823,32 @@ require("lazy").setup({
 		end,
 	},
 
-	-- { -- You can easily change to a different colorscheme.
-	--   -- Change the name of the colorscheme plugin below, and then
-	--   -- change the command in the config to whatever the name of that colorscheme is.
-	--   --
-	--   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-	--   'folke/tokyonight.nvim',
-	--   priority = 1000, -- Make sure to load this before all the other start plugins.
-	--   init = function()
-	--     -- Load the colorscheme here.
-	--     -- Like many other themes, this one has different styles, and you could load
-	--     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-	--     vim.cmd.colorscheme 'tokyonight-night'
-
-	--     -- You can configure highlights by doing something like:
-	--     vim.cmd.hi 'Comment gui=none'
-	--   end,
-	-- },
-
-	{
-		"navarasu/onedark.nvim",
-		priority = 1000,
+	{ -- You can easily change to a different colorscheme.
+		-- Change the name of the colorscheme plugin below, and then
+		-- change the command in the config to whatever the name of that colorscheme is.
+		--
+		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+		"folke/tokyonight.nvim",
+		priority = 1000, -- Make sure to load this before all the other start plugins.
 		init = function()
-			vim.cmd.colorscheme("onedark")
+			-- Load the colorscheme here.
+			-- Like many other themes, this one has different styles, and you could load
+			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+			vim.cmd.colorscheme("tokyonight-night")
+
+			-- You can configure highlights by doing something like:
 			vim.cmd.hi("Comment gui=none")
 		end,
 	},
+
+	--	{
+	--		"navarasu/onedark.nvim",
+	--		priority = 1000,
+	--		init = function()
+	--			vim.cmd.colorscheme("onedark")
+	--			vim.cmd.hi("Comment gui=none")
+	--		end,
+	--	},
 
 	-- Highlight todo, notes, etc in comments
 	{
