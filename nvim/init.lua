@@ -321,7 +321,7 @@ require("lazy").setup({
 		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
 		config = function()
 			vim.keymap.set("n", "<space>fb", function()
-				require("telescope").extensions.file_browser.file_browser({ select_buffer = true })
+				require("telescope").extensions.file_browser.file_browser({ select_buffer = true, path = "%:p:h" })
 			end)
 		end,
 	},
@@ -577,6 +577,8 @@ require("lazy").setup({
 				end,
 			})
 
+			vim.filetype.add({ extension = { templ = "templ" } })
+
 			-- LSP servers and clients are able to communicate to each other what features they support.
 			--  By default, Neovim doesn't support everything that is in the LSP specification.
 			--  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
@@ -605,7 +607,10 @@ require("lazy").setup({
 				--
 				-- But for many setups, the LSP (`tsserver`) will work just fine
 				tsserver = {},
-				--
+
+				templ = {
+					filetypes = { "templ" },
+				},
 
 				lua_ls = {
 					-- cmd = {...},
@@ -834,7 +839,7 @@ require("lazy").setup({
 			-- Load the colorscheme here.
 			-- Like many other themes, this one has different styles, and you could load
 			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			vim.cmd.colorscheme("tokyonight-storm")
+			vim.cmd.colorscheme("tokyonight-moon")
 
 			-- You can configure highlights by doing something like:
 			vim.cmd.hi("Comment gui=none")
@@ -861,7 +866,7 @@ require("lazy").setup({
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		opts = {
-			ensure_installed = { "bash", "c", "html", "lua", "markdown", "vim", "vimdoc" },
+			ensure_installed = { "bash", "c", "html", "lua", "markdown", "vim", "vimdoc", "templ" },
 			-- Autoinstall languages that are not installed
 			auto_install = true,
 			highlight = {
