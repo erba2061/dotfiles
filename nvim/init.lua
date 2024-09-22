@@ -217,6 +217,8 @@ if not vim.loop.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+vim.filetype.add({ extension = { templ = "templ" } })
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -316,15 +318,15 @@ require("lazy").setup({
 	-- you do for a plugin at the top level, you can do for a dependency.
 	--
 	-- Use the `dependencies` key to specify the dependencies of a particular plugin
-	{
-		"nvim-telescope/telescope-file-browser.nvim",
-		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-		config = function()
-			vim.keymap.set("n", "<space>fb", function()
-				require("telescope").extensions.file_browser.file_browser({ select_buffer = true })
-			end)
-		end,
-	},
+	--	{
+	--		"nvim-telescope/telescope-file-browser.nvim",
+	--		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+	--		config = function()
+	--			vim.keymap.set("n", "<space>fb", function()
+	--				require("telescope").extensions.file_browser.file_browser({ select_buffer = true })
+	--			end)
+	--		end,
+	--	},
 	{ -- Fuzzy Finder (files, lsp, etc)
 		"nvim-telescope/telescope.nvim",
 		event = "VimEnter",
@@ -417,7 +419,9 @@ require("lazy").setup({
 
 			vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "[F]ind [H]elp" })
 			vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "[F]ind [K]eymaps" })
-			vim.keymap.set("n", "<leader>ff", find_files, { desc = "[F]ind [F]iles" })
+			vim.keymap.set("n", "<leader>ff", function()
+				find_files()
+			end, { desc = "[F]ind [F]iles" })
 			vim.keymap.set("n", "<leader>fs", builtin.builtin, { desc = "[F]ind [S]elect Telescope" })
 			vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "[F]ind current [W]ord" })
 			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "[F]ind by [G]rep" })
@@ -605,7 +609,8 @@ require("lazy").setup({
 				--
 				-- But for many setups, the LSP (`tsserver`) will work just fine
 				tsserver = {},
-				--
+				templ = {},
+				html = {},
 
 				lua_ls = {
 					-- cmd = {...},
@@ -613,6 +618,9 @@ require("lazy").setup({
 					-- capabilities = {},
 					settings = {
 						Lua = {
+							diagnostics = {
+								globals = { "vim" },
+							},
 							completion = {
 								callSnippet = "Replace",
 							},
@@ -678,6 +686,7 @@ require("lazy").setup({
 				javascript = { { "prettierd", "prettier" } },
 				javascriptreact = { { "prettierd", "prettier" } },
 				less = { { "prettierd", "prettier" } },
+				templ = { { "templ" } },
 			},
 		},
 	},
@@ -823,32 +832,32 @@ require("lazy").setup({
 		end,
 	},
 
-	{ -- You can easily change to a different colorscheme.
-		-- Change the name of the colorscheme plugin below, and then
-		-- change the command in the config to whatever the name of that colorscheme is.
-		--
-		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-		"folke/tokyonight.nvim",
-		priority = 1000, -- Make sure to load this before all the other start plugins.
-		init = function()
-			-- Load the colorscheme here.
-			-- Like many other themes, this one has different styles, and you could load
-			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			vim.cmd.colorscheme("tokyonight-storm")
-
-			-- You can configure highlights by doing something like:
-			vim.cmd.hi("Comment gui=none")
-		end,
-	},
-
-	--	{
-	--		"navarasu/onedark.nvim",
-	--		priority = 1000,
+	--{ -- You can easily change to a different colorscheme.
+	-- Change the name of the colorscheme plugin below, and then
+	-- change the command in the config to whatever the name of that colorscheme is.
+	--
+	-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+	--		"folke/tokyonight.nvim",
+	--		priority = 1000, -- Make sure to load this before all the other start plugins.
 	--		init = function()
-	--			vim.cmd.colorscheme("onedark")
+	--			-- Load the colorscheme here.
+	--			-- Like many other themes, this one has different styles, and you could load
+	--			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+	--			vim.cmd.colorscheme("tokyonight-storm")
+	--
+	--			-- You can configure highlights by doing something like:
 	--			vim.cmd.hi("Comment gui=none")
 	--		end,
 	--	},
+
+	{
+		"navarasu/onedark.nvim",
+		priority = 1000,
+		init = function()
+			vim.cmd.colorscheme("onedark")
+			vim.cmd.hi("Comment gui=none")
+		end,
+	},
 
 	-- Highlight todo, notes, etc in comments
 	{
@@ -885,6 +894,28 @@ require("lazy").setup({
 			--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
 			--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
 			--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+		end,
+	},
+
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+			-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+		},
+		config = function()
+			local builtin = require("neo-tree")
+			builtin.setup({
+				window = {
+					filesystem = {
+						use_libuv_file_watcher = true,
+					},
+				},
+			})
+			vim.keymap.set("n", "<leader>fb", "<cmd>Neotree float reveal_force_cwd<cr>", { desc = "[F]ind [B]rowser" })
 		end,
 	},
 
