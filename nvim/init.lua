@@ -321,7 +321,11 @@ require("lazy").setup({
 		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
 		config = function()
 			vim.keymap.set("n", "<space>fb", function()
-				require("telescope").extensions.file_browser.file_browser({ select_buffer = true, path = "%:p:h" })
+				require("telescope").extensions.file_browser.file_browser({
+					select_buffer = true,
+					path = "%:p:h",
+					hidden = true,
+				})
 			end)
 		end,
 	},
@@ -408,10 +412,10 @@ require("lazy").setup({
 				end
 
 				builtin.find_files({
-					desc = "[S]earch [S]uffer",
+					desc = "[F]ind [F]iles",
 					prompt_title = curr_buf and "Find Files Relative to Buffer" or "Find Files",
 					cwd = cwd,
-					hidden = false,
+					hidden = true,
 				})
 			end
 
@@ -518,7 +522,9 @@ require("lazy").setup({
 					map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
 
 					-- Find references for the word under your cursor.
-					map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+					map("gr", function()
+						require("telescope.builtin").lsp_references({ show_line = false })
+					end, "[G]oto [R]eferences")
 
 					-- Jump to the implementation of the word under your cursor.
 					--  Useful when your language has ways of declaring types without an actual implementation.
@@ -893,6 +899,22 @@ require("lazy").setup({
 		end,
 	},
 
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		opts = {
+			enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+			max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+			min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+			line_numbers = true,
+			multiline_threshold = 1, -- Maximum number of lines to collapse for a single context line
+			trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+			mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
+			-- Separator between context and content. Should be a single character string, like '-'.
+			-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+			separator = nil,
+			zindex = 20, -- The Z-index of the context window
+		},
+	},
 	-- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
 	-- place them in the correct locations.
