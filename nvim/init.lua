@@ -217,6 +217,8 @@ if not vim.loop.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+vim.filetype.add({ extension = { templ = "templ" } })
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
@@ -300,12 +302,17 @@ require("lazy").setup({
 			require("which-key").setup()
 
 			-- Document existing key chains
-			require("which-key").register({
-				["<leader>c"] = { name = "[C]ode", _ = "which_key_ignore" },
-				["<leader>d"] = { name = "[D]ocument", _ = "which_key_ignore" },
-				["<leader>r"] = { name = "[R]ename", _ = "which_key_ignore" },
-				["<leader>s"] = { name = "[S]earch", _ = "which_key_ignore" },
-				["<leader>w"] = { name = "[W]orkspace", _ = "which_key_ignore" },
+			require("which-key").add({
+				{ "<leader>c", group = "[C]ode" },
+				{ "<leader>c_", hidden = true },
+				{ "<leader>d", group = "[D]ocument" },
+				{ "<leader>d_", hidden = true },
+				{ "<leader>r", group = "[R]ename" },
+				{ "<leader>r_", hidden = true },
+				{ "<leader>s", group = "[S]earch" },
+				{ "<leader>s_", hidden = true },
+				{ "<leader>w", group = "[W]orkspace" },
+				{ "<leader>w_", hidden = true },
 			})
 		end,
 	},
@@ -316,19 +323,19 @@ require("lazy").setup({
 	-- you do for a plugin at the top level, you can do for a dependency.
 	--
 	-- Use the `dependencies` key to specify the dependencies of a particular plugin
-	{
-		"nvim-telescope/telescope-file-browser.nvim",
-		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-		config = function()
-			vim.keymap.set("n", "<space>fb", function()
-				require("telescope").extensions.file_browser.file_browser({
-					select_buffer = true,
-					path = "%:p:h",
-					hidden = true,
-				})
-			end)
-		end,
-	},
+	-- {
+	-- 	"nvim-telescope/telescope-file-browser.nvim",
+	-- 	dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+	-- 	config = function()
+	-- 		vim.keymap.set("n", "<space>fb", function()
+	-- 			require("telescope").extensions.file_browser.file_browser({
+	-- 				select_buffer = true,
+	-- 				path = "%:p:h",
+	-- 				hidden = true,
+	-- 			})
+	-- 		end)
+	-- 	end,
+	-- },
 	{ -- Fuzzy Finder (files, lsp, etc)
 		"nvim-telescope/telescope.nvim",
 		event = "VimEnter",
@@ -421,7 +428,9 @@ require("lazy").setup({
 
 			vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "[F]ind [H]elp" })
 			vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "[F]ind [K]eymaps" })
-			vim.keymap.set("n", "<leader>ff", find_files, { desc = "[F]ind [F]iles" })
+			vim.keymap.set("n", "<leader>ff", function()
+				find_files()
+			end, { desc = "[F]ind [F]iles" })
 			vim.keymap.set("n", "<leader>fs", builtin.builtin, { desc = "[F]ind [S]elect Telescope" })
 			vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "[F]ind current [W]ord" })
 			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "[F]ind by [G]rep" })
@@ -606,17 +615,8 @@ require("lazy").setup({
 				gopls = {},
 				-- pyright = {},
 				rust_analyzer = {},
-				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-				--
-				-- Some languages (like typescript) have entire language plugins that can be useful:
-				--    https://github.com/pmizio/typescript-tools.nvim
-				--
-				-- But for many setups, the LSP (`tsserver`) will work just fine
-				tsserver = {},
-
-				templ = {
-					filetypes = { "templ" },
-				},
+				templ = {},
+				html = {},
 
 				lua_ls = {
 					-- cmd = {...},
@@ -624,6 +624,9 @@ require("lazy").setup({
 					-- capabilities = {},
 					settings = {
 						Lua = {
+							diagnostics = {
+								globals = { "vim" },
+							},
 							completion = {
 								callSnippet = "Replace",
 							},
@@ -676,7 +679,8 @@ require("lazy").setup({
 				local disable_filetypes = { c = true, cpp = true }
 				return {
 					timeout_ms = 500,
-					lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+					lsp_format = not disable_filetypes[vim.bo[bufnr].filetype],
+					stop_after_first = true,
 				}
 			end,
 			formatters_by_ft = {
@@ -689,6 +693,7 @@ require("lazy").setup({
 				javascript = { { "prettierd", "prettier" } },
 				javascriptreact = { { "prettierd", "prettier" } },
 				less = { { "prettierd", "prettier" } },
+				templ = { { "templ" } },
 			},
 		},
 	},
@@ -834,32 +839,32 @@ require("lazy").setup({
 		end,
 	},
 
-	{ -- You can easily change to a different colorscheme.
-		-- Change the name of the colorscheme plugin below, and then
-		-- change the command in the config to whatever the name of that colorscheme is.
-		--
-		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-		"folke/tokyonight.nvim",
-		priority = 1000, -- Make sure to load this before all the other start plugins.
-		init = function()
-			-- Load the colorscheme here.
-			-- Like many other themes, this one has different styles, and you could load
-			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			vim.cmd.colorscheme("tokyonight-moon")
-
-			-- You can configure highlights by doing something like:
-			vim.cmd.hi("Comment gui=none")
-		end,
-	},
-
-	--	{
-	--		"navarasu/onedark.nvim",
-	--		priority = 1000,
+	--{ -- You can easily change to a different colorscheme.
+	-- Change the name of the colorscheme plugin below, and then
+	-- change the command in the config to whatever the name of that colorscheme is.
+	--
+	-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+	--		"folke/tokyonight.nvim",
+	--		priority = 1000, -- Make sure to load this before all the other start plugins.
 	--		init = function()
-	--			vim.cmd.colorscheme("onedark")
+	--			-- Load the colorscheme here.
+	--			-- Like many other themes, this one has different styles, and you could load
+	--			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+	--			vim.cmd.colorscheme("tokyonight-storm")
+	--
+	--			-- You can configure highlights by doing something like:
 	--			vim.cmd.hi("Comment gui=none")
 	--		end,
 	--	},
+
+	{
+		"navarasu/onedark.nvim",
+		priority = 1000,
+		init = function()
+			vim.cmd.colorscheme("onedark")
+			vim.cmd.hi("Comment gui=none")
+		end,
+	},
 
 	-- Highlight todo, notes, etc in comments
 	{
@@ -915,6 +920,34 @@ require("lazy").setup({
 			zindex = 20, -- The Z-index of the context window
 		},
 	},
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+			-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+		},
+		config = function()
+			local builtin = require("neo-tree")
+			builtin.setup({
+				filesystem = {
+					filtered_items = {
+						hide_dotfiles = false,
+						hide_gitignored = false,
+						hide_hidden = false,
+						hide_by_name = {
+							".git",
+						},
+					},
+					use_libuv_file_watcher = true,
+				},
+			})
+			vim.keymap.set("n", "<leader>fb", "<cmd>Neotree float reveal_force_cwd<cr>", { desc = "[F]ind [B]rowser" })
+		end,
+	},
+
 	-- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
 	-- place them in the correct locations.
