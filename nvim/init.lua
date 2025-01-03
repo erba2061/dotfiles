@@ -231,6 +231,7 @@ vim.filetype.add({ extension = { templ = "templ" } })
 --
 -- NOTE: Here is where you install your plugins.
 require("lazy").setup({
+	{ import = "plugins" },
 	-- https://github.com/erba2061/dotfiles
 	{
 		"ray-x/go.nvim",
@@ -279,63 +280,6 @@ require("lazy").setup({
 			},
 		},
 	},
-
-	-- NOTE: Plugins can also be configured to run Lua code when they are loaded.
-	--
-	-- This is often very useful to both group configuration, as well as handle
-	-- lazy loading plugins that don't need to be loaded immediately at startup.
-	--
-	-- For example, in the following configuration, we use:
-	--  event = 'VimEnter'
-	--
-	-- which loads which-key before all the UI elements are loaded. Events can be
-	-- normal autocommands events (`:help autocmd-events`).
-	--
-	-- Then, because we use the `config` key, the configuration only runs
-	-- after the plugin has been loaded:
-	--  config = function() ... end
-
-	{ -- Useful plugin to show you pending keybinds.
-		"folke/which-key.nvim",
-		event = "VimEnter", -- Sets the loading event to 'VimEnter'
-		config = function() -- This is the function that runs, AFTER loading
-			require("which-key").setup()
-
-			-- Document existing key chains
-			require("which-key").add({
-				{ "<leader>c", group = "[C]ode" },
-				{ "<leader>c_", hidden = true },
-				{ "<leader>d", group = "[D]ocument" },
-				{ "<leader>d_", hidden = true },
-				{ "<leader>r", group = "[R]ename" },
-				{ "<leader>r_", hidden = true },
-				{ "<leader>s", group = "[S]earch" },
-				{ "<leader>s_", hidden = true },
-				{ "<leader>w", group = "[W]orkspace" },
-				{ "<leader>w_", hidden = true },
-			})
-		end,
-	},
-
-	-- NOTE: Plugins can specify dependencies.
-	--
-	-- The dependencies are proper plugin specifications as well - anything
-	-- you do for a plugin at the top level, you can do for a dependency.
-	--
-	-- Use the `dependencies` key to specify the dependencies of a particular plugin
-	-- {
-	-- 	"nvim-telescope/telescope-file-browser.nvim",
-	-- 	dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-	-- 	config = function()
-	-- 		vim.keymap.set("n", "<space>fb", function()
-	-- 			require("telescope").extensions.file_browser.file_browser({
-	-- 				select_buffer = true,
-	-- 				path = "%:p:h",
-	-- 				hidden = true,
-	-- 			})
-	-- 		end)
-	-- 	end,
-	-- },
 	{ -- Fuzzy Finder (files, lsp, etc)
 		"nvim-telescope/telescope.nvim",
 		event = "VimEnter",
@@ -617,6 +561,7 @@ require("lazy").setup({
 				rust_analyzer = {},
 				templ = {},
 				html = {},
+				elixirls = {},
 
 				lua_ls = {
 					-- cmd = {...},
@@ -859,10 +804,10 @@ require("lazy").setup({
 	--	},
 
 	{
-		"navarasu/onedark.nvim",
+		"folke/tokyonight.nvim",
 		priority = 1000,
 		init = function()
-			vim.cmd.colorscheme("onedark")
+			vim.cmd.colorscheme("tokyonight")
 			vim.cmd.hi("Comment gui=none")
 		end,
 	},
@@ -968,6 +913,7 @@ require("lazy").setup({
 	--  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
 	--    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
 	-- { import = 'custom.plugins' },
+	{ "github/copilot.vim" },
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
