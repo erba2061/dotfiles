@@ -18,9 +18,3 @@ nvim:
 
 - Rip grep (https://github.com/nvim-telescope/telescope.nvim#suggested-dependencies)
 
-- Packer (https://github.com/wbthomason/packer.nvim#quickstart)
-
-## Setup
-
-- `:PackerInstall` - install plugins defined in `nvim/lua/plugins.lua`
-
