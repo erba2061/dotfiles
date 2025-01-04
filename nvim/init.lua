@@ -357,6 +357,7 @@ require("lazy").setup({
 		config = function()
 			local builtin = require("neo-tree")
 			builtin.setup({
+
 				filesystem = {
 					filtered_items = {
 						hide_dotfiles = false,
