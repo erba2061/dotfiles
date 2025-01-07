@@ -44,3 +44,15 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+vim.opt.colorcolumn = "120"
+
+vim.api.nvim_create_autocmd("BufEnter", {
+	group = vim.api.nvim_create_augroup("OptsChangeGroup", { clear = false }),
+	callback = function()
+		local textwidth = vim.o.textwidth
+		if textwidth > 0 then
+			vim.opt.colorcolumn = string.format("%d", vim.o.textwidth)
+		end
+	end,
+})
