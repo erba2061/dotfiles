@@ -13,6 +13,9 @@ vim.schedule(function()
 	vim.opt.clipboard = "unnamedplus"
 end)
 
+vim.opt.foldmethod = "indent"
+vim.opt.foldlevel = 69
+
 -- Enable break indent
 vim.opt.breakindent = true
 
@@ -34,7 +37,6 @@ vim.opt.timeoutlen = 300
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
-vim.opt.splitbelow = true
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = "split"

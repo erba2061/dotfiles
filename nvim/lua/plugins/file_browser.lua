@@ -9,7 +9,6 @@ return {
 	config = function()
 		local builtin = require("neo-tree")
 		builtin.setup({
-
 			filesystem = {
 				filtered_items = {
 					hide_dotfiles = false,
@@ -22,6 +21,6 @@ return {
 				use_libuv_file_watcher = true,
 			},
 		})
-		vim.keymap.set("n", "<leader>fb", "<cmd>Neotree float reveal_force_cwd<cr>", { desc = "[F]ind [B]rowser" })
+		vim.keymap.set("n", "<leader>fb", "<cmd>Neotree current reveal_force_cwd<cr>", { desc = "[F]ind [B]rowser" })
 	end,
 }

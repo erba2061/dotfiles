@@ -37,7 +37,7 @@ return {
 				},
 				vimgrep_arguments = vim.list_extend(
 					{ unpack(ts_config.values.vimgrep_arguments) },
-					{ "--hidden", "--glob", "!**/.git/*" }
+					{ "--hidden", "--glob", "!**/.git/*", "--line-number", "--trim" }
 				),
 				preview = {
 					filesize_limit = 0.1,
@@ -48,6 +48,7 @@ return {
 					previewer = false,
 					find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
 				},
+				live_grep = {},
 			},
 			extensions = {
 				file_browser = {
