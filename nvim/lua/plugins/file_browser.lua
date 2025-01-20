@@ -20,7 +20,16 @@ return {
 				},
 				use_libuv_file_watcher = true,
 			},
+
+			window = {
+				popup = {
+					size = {
+						height = "100%",
+						width = "100%",
+					},
+				},
+			},
 		})
-		vim.keymap.set("n", "<leader>fb", "<cmd>Neotree current reveal_force_cwd<cr>", { desc = "[F]ind [B]rowser" })
+		vim.keymap.set("n", "<leader>fb", "<cmd>Neotree float reveal_force_cwd<cr>", { desc = "[F]ind [B]rowser" })
 	end,
 }
