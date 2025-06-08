@@ -26,3 +26,7 @@ vim.keymap.set("n", "<leader>gl", function()
 	local name = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
 	vim.cmd(string.format("G log --pretty=oneline %s", name))
 end, { desc = "Git diff current file" })
+
+vim.keymap.set("n", "M", function()
+	vim.cmd("vert Man " .. vim.fn.expand("<cword>"))
+end, { desc = "Manpage <cword>" })

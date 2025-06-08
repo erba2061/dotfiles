@@ -1,5 +1,7 @@
 local find = require("lib.find")
 
+vim.env.MANPATH = vim.uv.os_getenv("MANPATH", 1024)
+
 return {
 	"nvim-telescope/telescope.nvim",
 	event = "VimEnter",
@@ -49,6 +51,19 @@ return {
 					find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
 				},
 				live_grep = {},
+				man_pages = {
+					-- The sections of the manual are:
+					--   1.   General Commands Manual
+					--   2.   System Calls Manual
+					--   3.   Library Functions Manual
+					--   4.   Kernel Interfaces Manual
+					--   5.   File Formats Manual
+					--   6.   Games Manual
+					--   7.   Miscellaneous Information Manual
+					--   8.   System Manager's Manual
+					--   9.   Kernel Developer's Manual
+					sections = { "2", "3", "4", "5", "6", "7", "8", "9" },
+				},
 			},
 			extensions = {
 				file_browser = {
@@ -89,6 +104,7 @@ return {
 		vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[F]ind [F]iles" })
 		vim.keymap.set("n", "<leader>rg", new_cached_picker("live_grep"), { desc = "[F]ind by [G]rep" })
 		vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "[F]ind by [G]rep" })
+		vim.keymap.set("n", "<leader>fm", builtin.man_pages, { desc = "[F]ind [M]an pages" })
 		vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "[F]ind [D]iagnostics" })
 		vim.keymap.set("n", "<leader>f.", builtin.oldfiles, { desc = '[F]ind Recent Files ("." for repeat)' })
 		vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })

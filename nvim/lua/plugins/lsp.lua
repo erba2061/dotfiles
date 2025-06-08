@@ -33,8 +33,8 @@ return {
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			-- Automatically install LSPs and related tools to stdpath for Neovim
-			{ "williamboman/mason.nvim", config = true }, -- NOTE: Must be loaded before dependants
-			"williamboman/mason-lspconfig.nvim",
+			{ "mason-org/mason.nvim", opts = {} }, -- NOTE: Must be loaded before dependants
+			"mason-org/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 
 			-- Useful status updates for LSP.
@@ -145,6 +145,7 @@ return {
 				templ = {},
 				html = {},
 				elixirls = {},
+				cssls = {},
 				lua_ls = {
 					settings = {
 						Lua = {
@@ -157,8 +158,6 @@ return {
 				},
 			}
 
-			require("mason").setup()
-
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
@@ -166,6 +165,8 @@ return {
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 			require("mason-lspconfig").setup({
+				ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
+				automatic_enable = true,
 				handlers = {
 					function(server_name)
 						local server = servers[server_name] or {}
