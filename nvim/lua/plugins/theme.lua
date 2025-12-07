@@ -1,8 +1,13 @@
 return {
 	{
-		"EdenEast/nightfox.nvim",
+		"rose-pine/neovim",
 		init = function()
-			vim.cmd.colorscheme("terafox")
+			require("rose-pine").setup({
+				styles = {
+					italic = false,
+				},
+			})
+			vim.cmd.colorscheme("rose-pine")
 		end,
 	},
 }
