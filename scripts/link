@@ -1,6 +1,5 @@
 #!/bin/bash
 
-$CONFIG_PATH=$XDG_CONFIG_HOME:-$HOME/.config
+CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}"
 
-ln -Fis $(pwd)/.config/nvim $CONFIG_PATH
-ln -Fis $(pwd)/.config/ghostty $CONFIG_PATH
+ln -Fis $(pwd)/.config/* $CONFIG_PATH
