@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# .config link
 CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}"
+SOURCE_PATH="$(pwd)/.config"
 
-ln -Fis $(pwd)/.config/* $CONFIG_PATH
+for item in "$SOURCE_PATH"/*; do
+    name=$(basename "$item")
+    ln -Fisn "$item" "$CONFIG_PATH/$name"
+done
+
+# .zshrc link
+ln -fisn "$(pwd)/.zshrc" "$HOME/.zshrc"

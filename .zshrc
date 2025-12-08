@@ -121,7 +121,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     *) export PATH="$PNPM_HOME:$PATH" ;;
   esac
   # pnpm end
-end
+fi
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
