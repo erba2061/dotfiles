@@ -3,7 +3,7 @@ local function set_claude_api_key()
 	local ok, content = pcall(vim.fn.readfile, file)
 
 	if not (ok and content and content[1]) then
-		vim.notify("missing or invalid claude api key", vim.log.levels.WARN)
+		-- vim.notify("missing or invalid claude api key", vim.log.levels.WARN)
 		return
 	end
 
