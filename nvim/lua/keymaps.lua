@@ -30,3 +30,12 @@ end, { desc = "Git diff current file" })
 vim.keymap.set("n", "M", function()
 	vim.cmd("vert Man " .. vim.fn.expand("<cword>"))
 end, { desc = "Manpage <cword>" })
+
+vim.keymap.set("n", "<leader>cp", function()
+	local full_path = vim.fn.expand("%:p")
+	local cwd = vim.fn.getcwd()
+	local rel_path = vim.fn.fnamemodify(full_path, ":." .. cwd)
+	vim.fn.setreg("+", rel_path)
+end, { desc = "Copy file path" })
+
+vim.keymap.set("n", "\\", "<cmd>Neotree float reveal_force_cwd<cr>", { desc = "[F]ind [B]rowser" })

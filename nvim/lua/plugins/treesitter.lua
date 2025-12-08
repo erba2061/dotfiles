@@ -2,12 +2,11 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
-		main = "nvim-treesitter.configs",
-
+		branch = "master",
+		lazy = false,
 		opts = {
 			ensure_installed = {
 				"bash",
-				"c",
 				"diff",
 				"html",
 				"lua",
@@ -18,12 +17,20 @@ return {
 				"vim",
 				"vimdoc",
 				"templ",
+				"tsx",
+				"typescript",
+				"xml",
+				"yaml",
+				"jsdoc",
+				"json",
+				"javascript",
+				"regex",
+				"go",
 			},
 
 			auto_install = true,
 			highlight = {
 				enable = true,
-
 				additional_vim_regex_highlighting = { "ruby" },
 			},
 			indent = { enable = true, disable = { "ruby" } },
@@ -31,20 +38,5 @@ return {
 		config = function(_, opts)
 			require("nvim-treesitter.configs").setup(opts)
 		end,
-	},
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-		opts = {
-			enable = true,
-			max_lines = 0,
-			min_window_height = 0,
-			line_numbers = true,
-			multiline_threshold = 1,
-			trim_scope = "outer",
-			mode = "cursor",
-
-			separator = nil,
-			zindex = 20,
-		},
 	},
 }
