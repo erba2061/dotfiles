@@ -45,8 +45,7 @@
 resize-overlay=never
 
 font-size=18
-font-family=JetBrainsMona
-adjust-cell-width=-1
+font-family=DejaVu Sans Mono for Powerline
 theme=Rose Pine
 
 keybind = super+k=goto_split:up
