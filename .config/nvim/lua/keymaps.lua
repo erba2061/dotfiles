@@ -40,3 +40,37 @@ end, { desc = "Copy file path" })
 
 vim.keymap.set("n", "<leader>fb", "<cmd>Neotree float reveal_force_cwd<cr>", { desc = "[F]ind [B]rowser" })
 vim.keymap.set("n", "\\", "<cmd>Neotree float reveal_force_cwd<cr>", { desc = "[F]ind [B]rowser" })
+
+-- Jumplist navigation by file (skip entries in same file)
+local function jump_to_prev_file()
+	local jumplist, current_pos = unpack(vim.fn.getjumplist())
+	local current_bufnr = vim.api.nvim_get_current_buf()
+
+	for i = current_pos, 1, -1 do
+		local entry = jumplist[i]
+		if entry.bufnr ~= current_bufnr and vim.api.nvim_buf_is_valid(entry.bufnr) then
+			local jumps_needed = current_pos - i + 1
+			local jump_cmd = vim.api.nvim_replace_termcodes("normal! " .. jumps_needed .. "<C-o>", true, false, true)
+			vim.cmd(jump_cmd)
+			return
+		end
+	end
+end
+
+local function jump_to_next_file()
+	local jumplist, current_pos = unpack(vim.fn.getjumplist())
+	local current_bufnr = vim.api.nvim_get_current_buf()
+
+	for i = current_pos + 2, #jumplist do
+		local entry = jumplist[i]
+		if entry.bufnr ~= current_bufnr and vim.api.nvim_buf_is_valid(entry.bufnr) then
+			local jumps_needed = i - current_pos - 1
+			local jump_cmd = vim.api.nvim_replace_termcodes("normal! " .. jumps_needed .. "<C-i>", true, false, true)
+			vim.cmd(jump_cmd)
+			return
+		end
+	end
+end
+
+vim.keymap.set("n", "<C-S-o>", jump_to_prev_file, { desc = "Jump to previous file in jumplist" })
+vim.keymap.set("n", "<C-S-i>", jump_to_next_file, { desc = "Jump to next file in jumplist" })
