@@ -104,7 +104,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim="nvim"
-bindkey -v
+alias gg="lazygit"
+
+#vi mode
+# bindkey -v
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -135,3 +138,36 @@ export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
 
 
+
+# opencode
+export PATH=/Users/t1253/.opencode/bin:$PATH
+
+
+#Vega CLI
+source "/Users/t1253/vega/env"
+
+# If you need to have binutils first in your PATH, run:
+export PATH="/opt/homebrew/opt/binutils/bin:$PATH"
+
+# For compilers to find binutils you may need to set:
+export LDFLAGS="-L/opt/homebrew/opt/binutils/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/binutils/include"
+
+# Commands also provided by macOS and the commands dir, dircolors, vdir have been installed with the prefix "g".
+# If you need to use these commands with their normal names, you can add a "gnubin" directory to your PATH with:
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+# If you need to use it as "awk", you can add a "gnubin" directory
+# to your PATH from your ~/.bashrc and/or ~/.zshrc like:
+export PATH="/opt/homebrew/opt/gawk/libexec/gnubin:$PATH"
+# All commands have been installed with the prefix "g".
+# If you need to use these commands with their normal names, you
+# can add a "gnubin" directory to your PATH from your bashrc like:
+export PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
+# If you need to use these commands with their normal names, you
+# can add a "gnubin" directory to your PATH from your bashrc like:
+export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
+# If you need to use it as "sed", you can add a "gnubin" directory
+# to your PATH from your bashrc like:
+export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/binutils/bin:$PATH"
+export PATH="/opt/homebrew/opt/binutils/bin:$PATH"
