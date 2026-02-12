@@ -44,8 +44,8 @@
 
 resize-overlay=never
 
-font-size=18
-font-family=DejaVu Sans Mono for Powerline
+font-size=16
+font-family=DejaVuSansM Nerd Font Mono
 theme=Rose Pine
 
 keybind = super+k=goto_split:up
