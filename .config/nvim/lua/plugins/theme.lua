@@ -1,13 +1,20 @@
 return {
 	{
-		"rose-pine/neovim",
+		"ellisonleao/gruvbox.nvim",
+		priority = 1000,
 		init = function()
-			require("rose-pine").setup({
-				styles = {
-					italic = false,
+			require("gruvbox").setup({
+				contrast = "hard", -- matches Ghostty's "Gruvbox Dark Hard"
+				italic = {
+					strings = false,
+					emphasis = false,
+					comments = false,
+					operators = false,
+					folds = false,
 				},
 			})
-			vim.cmd.colorscheme("rose-pine")
+			vim.o.background = "dark"
+			vim.cmd.colorscheme("gruvbox")
 		end,
 	},
 }

@@ -46,7 +46,7 @@ resize-overlay=never
 
 font-size=16
 font-family=DejaVuSansM Nerd Font Mono
-theme=Rose Pine
+theme=Gruvbox Dark Hard
 
 keybind = super+k=goto_split:up
 keybind = super+l=goto_split:right

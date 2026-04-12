@@ -69,9 +69,11 @@ export ZSH="$HOME/.oh-my-zsh"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+
+git config --global oh-my-zsh.hide-dirty 1 &>/dev/null
 plugins=(
-  git
-  history-substring-search
+#  git
+#  history-substring-search
 )
 
 ZSH_THEME="eastwood"
@@ -110,10 +112,10 @@ alias gg="lazygit"
 # bindkey -v
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+ [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"
 
 # check if macOS and set PATH for gnu tools
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -144,7 +146,7 @@ export PATH=/Users/t1253/.opencode/bin:$PATH
 
 
 #Vega CLI
-source "/Users/t1253/vega/env"
+#source "/Users/t1253/vega/env"
 
 # If you need to have binutils first in your PATH, run:
 export PATH="/opt/homebrew/opt/binutils/bin:$PATH"
