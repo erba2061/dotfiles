@@ -49,6 +49,9 @@ vim.opt.scrolloff = 10
 
 vim.opt.colorcolumn = "120"
 
+-- Neovim 0.12 options
+vim.opt.pumborder = "single" -- Border around completion popup menu ("single", "double", "rounded", "solid", "shadow")
+
 vim.api.nvim_create_autocmd("BufEnter", {
 	group = vim.api.nvim_create_augroup("OptsChangeGroup", { clear = false }),
 	callback = function()

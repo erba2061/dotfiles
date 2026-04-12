@@ -4,8 +4,13 @@ return {
 		build = ":TSUpdate",
 		branch = "master",
 		lazy = false,
-		opts = {
-			ensure_installed = {
+		config = function()
+			-- Neovim 0.12 uses native treesitter highlighting
+			-- nvim-treesitter is only needed for parser installation
+			local ts = require("nvim-treesitter")
+
+			-- Install parsers
+			ts.install({
 				"bash",
 				"diff",
 				"html",
@@ -26,17 +31,7 @@ return {
 				"javascript",
 				"regex",
 				"go",
-			},
-
-			auto_install = true,
-			highlight = {
-				enable = true,
-				additional_vim_regex_highlighting = { "ruby" },
-			},
-			indent = { enable = true, disable = { "ruby" } },
-		},
-		config = function(_, opts)
-			require("nvim-treesitter.configs").setup(opts)
+			})
 		end,
 	},
 }

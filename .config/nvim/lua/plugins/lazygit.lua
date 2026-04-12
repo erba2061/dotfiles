@@ -4,11 +4,15 @@ return {
 		local term = require("toggleterm")
 		term.setup()
 
-		vim.keymap.set(
-			"n",
-			"<leader>gg",
-			"<cmd>TermExec direction=float name=term_lazygit cmd=lazygit<cr>",
-			{ desc = "Go to previous [D]iagnostic message" }
-		)
+		local Terminal = require("toggleterm.terminal").Terminal
+		local lazygit = Terminal:new({
+			cmd = "lazygit",
+			direction = "float",
+			hidden = true,
+		})
+
+		vim.keymap.set("n", "<leader>gg", function()
+			lazygit:toggle()
+		end, { desc = "Open Lazygit" })
 	end,
 }

@@ -42,3 +42,14 @@ vim.keymap.set("n", "<leader>fb", "<cmd>Neotree float reveal_force_cwd<cr>", { d
 vim.keymap.set("n", "\\", "<cmd>Neotree float reveal_force_cwd<cr>", { desc = "" })
 
 vim.keymap.set("x", "p", '"_dP')
+
+-- Debug in VSCode
+vim.keymap.set("n", "<leader>dd", function()
+	local file = vim.fn.expand("%:p")
+	local line = vim.fn.line(".")
+	local col = vim.fn.col(".")
+	-- Use git root if available, otherwise cwd
+	local git_root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("\n", "")
+	local folder = git_root ~= "" and git_root or vim.fn.getcwd()
+	vim.fn.system(string.format("code %s --goto %s:%d:%d --reuse-window", folder, file, line, col))
+end, { desc = "[D]ebug in VSCode" })
