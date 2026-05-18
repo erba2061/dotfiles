@@ -45,6 +45,7 @@ return {
 				"elixir-ls",
 				"css-lsp",
 				"lua-language-server",
+				"typescript-language-server",
 				-- Formatters/tools
 				"stylua",
 			},
@@ -87,6 +88,7 @@ return {
 			vim.lsp.config("html", {})
 			vim.lsp.config("elixirls", {})
 			vim.lsp.config("cssls", {})
+			vim.lsp.config("ts_ls", {})
 
 			-- sourcekit is not installed via Mason (system-provided on macOS)
 			vim.lsp.config("sourcekit", {
@@ -104,6 +106,7 @@ return {
 				"elixirls",
 				"cssls",
 				"sourcekit",
+				"ts_ls",
 			})
 
 			-- LSP keymaps on attach

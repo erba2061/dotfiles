@@ -9,6 +9,7 @@ return {
 			cmd = "lazygit",
 			direction = "float",
 			hidden = true,
+			shell = "/bin/sh -c",
 		})
 
 		vim.keymap.set("n", "<leader>gg", function()
