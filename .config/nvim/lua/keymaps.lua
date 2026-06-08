@@ -44,8 +44,6 @@ end, { desc = "Copy file path" })
 vim.keymap.set("n", "<leader>fb", "<cmd>Neotree float reveal_force_cwd<cr>", { desc = "[F]ind [B]rowser" })
 vim.keymap.set("n", "\\", "<cmd>Neotree float reveal_force_cwd<cr>", { desc = "" })
 
-vim.keymap.set("x", "p", '"_dP')
-
 -- Debug in VSCode
 vim.keymap.set("n", "<leader>dd", function()
 	local file = vim.fn.expand("%:p")

@@ -88,7 +88,9 @@ return {
 			vim.lsp.config("html", {})
 			vim.lsp.config("elixirls", {})
 			vim.lsp.config("cssls", {})
-			vim.lsp.config("ts_ls", {})
+			vim.lsp.config("ts_ls", {
+				filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+			})
 
 			-- sourcekit is not installed via Mason (system-provided on macOS)
 			vim.lsp.config("sourcekit", {
