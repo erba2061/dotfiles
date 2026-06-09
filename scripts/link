@@ -4,8 +4,11 @@
 CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}"
 SOURCE_PATH="$(pwd)/.config"
 
+mkdir -p "$CONFIG_PATH"
+
 for item in "$SOURCE_PATH"/*; do
     name=$(basename "$item")
+    mkdir -p "$(dirname "$CONFIG_PATH/$name")"
     ln -Fisn "$item" "$CONFIG_PATH/$name"
 done
 
