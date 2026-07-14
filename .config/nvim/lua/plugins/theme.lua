@@ -1,20 +1,21 @@
 return {
 	{
-		"ellisonleao/gruvbox.nvim",
+		"navarasu/onedark.nvim",
 		priority = 1000,
 		init = function()
-			require("gruvbox").setup({
-				contrast = "hard", -- matches Ghostty's "Gruvbox Dark Hard"
-				italic = {
-					strings = false,
-					emphasis = false,
-					comments = false,
-					operators = false,
-					folds = false,
+			require("onedark").setup({
+				style = "dark", -- Options: dark, darker, cool, deep, warm, warmer
+				transparent = false,
+				term_colors = true,
+				code_style = {
+					comments = "none",
+					keywords = "none",
+					functions = "none",
+					strings = "none",
+					variables = "none",
 				},
 			})
-			vim.o.background = "dark"
-			vim.cmd.colorscheme("gruvbox")
+			require("onedark").load()
 		end,
 	},
 }

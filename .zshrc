@@ -174,3 +174,8 @@ export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="/opt/homebrew/opt/binutils/bin:$PATH"
 export PATH="/opt/homebrew/opt/binutils/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+
+command -v starship &>/dev/null && eval "$(starship init zsh)"
+
+# opencode
+export PATH=/Users/erikas/.opencode/bin:$PATH
