@@ -89,8 +89,24 @@ require("lazy").setup({
 		},
 		config = function()
 			local cmp = require("cmp")
+			local compare = require("cmp.config.compare")
 			local luasnip = require("luasnip")
+			local lsp_completion_kind = vim.lsp.protocol.CompletionItemKind
 			luasnip.config.setup({})
+
+			local function compare_lsp_kind(entry1, entry2)
+				local kind1 = entry1:get_kind()
+				local kind2 = entry2:get_kind()
+
+				if kind1 ~= kind2 then
+					if kind1 == lsp_completion_kind.Text or kind1 == lsp_completion_kind.Keyword then
+						return false
+					end
+					if kind2 == lsp_completion_kind.Text or kind2 == lsp_completion_kind.Keyword then
+						return true
+					end
+				end
+			end
 
 			cmp.setup.filetype("gitcommit", {
 				sources = cmp.config.sources({
@@ -141,6 +157,7 @@ require("lazy").setup({
 					["<C-u>"] = cmp.mapping.scroll_docs(4),
 
 					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+					-- ["<Tab>"] = cmp.mapping.confirm({ select = true }),
 
 					["<C-Space>"] = cmp.mapping.complete({}),
 
@@ -165,6 +182,20 @@ require("lazy").setup({
 					{ name = "luasnip" },
 					{ name = "path" },
 				},
+				sorting = {
+					comparators = {
+						compare.offset,
+						compare.exact,
+						compare_lsp_kind,
+						compare.score,
+						compare.recently_used,
+						compare.locality,
+						compare.kind,
+						compare.sort_text,
+						compare.length,
+						compare.order,
+					},
+				},
 			})
 		end,
 	},
@@ -174,7 +205,7 @@ require("lazy").setup({
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = { signs = false },
 	},
-	-- { "github/copilot.vim" },
+	{ "github/copilot.vim" },
 }, {
 	ui = {
 
